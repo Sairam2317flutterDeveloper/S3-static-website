@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-ecommerce
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: my-ecommerce
+  template:
+    metadata:
+      labels:
+        app: my-ecommerce
+    spec:
+      containers:
+      - name: my-ecommerce
+        image: 982529430039.dkr.ecr.ap-south-2.amazonaws.com/staticwebsite:latest
+        ports:
+        - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-ecommerceservice
+spec:
+  type: LoadBalancer
+  selector:
+    app: my-ecommerce
+  ports:
+  - port: 80
+    targetPort: 80
